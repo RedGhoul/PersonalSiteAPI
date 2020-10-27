@@ -49,7 +49,7 @@ namespace PortfolioSiteAPI.Controllers.Admin
         // GET: Comments/Create
         public IActionResult Create()
         {
-            ViewData["WorkExperienceId"] = new SelectList(_context.WorkExperiences, "Id", "Id");
+            ViewData["WorkExperienceId"] = new SelectList(_context.WorkExperiences, "Id", "Postion_Name");
             return View();
         }
 
