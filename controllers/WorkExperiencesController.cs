@@ -36,7 +36,7 @@ namespace PortfolioSiteAPI.Controllers
                 curUser = await _context.Users.FirstOrDefaultAsync();
             }
             var workExperinces = await _context.WorkExperiences.Where(
-                x => x.ApplicationUserId.Equals(curUser.Id)).OrderByDescending(x => x.OrderNumber).ToListAsync();
+                x => x.ApplicationUserId.Equals(curUser.Id)).OrderBy(x => x.OrderNumber).ToListAsync();
             var dto = _mapper.Map<ICollection<WorkExperienceDto>>(workExperinces);
 
             foreach (var item in dto)
