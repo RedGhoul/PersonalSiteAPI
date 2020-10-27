@@ -1,1 +1,10 @@
 .env
+appsettings.Development.json
+appsettings.json
+.vs/PortfolioSiteAPI/DesignTimeBuild/.dtbcache.v2
+.vs/PortfolioSiteAPI/v16/.suo
+/obj
+/bin
+.vs
+.vscode
+PortfolioSiteAPI.csproj.user

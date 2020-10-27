@@ -1,16 +1,20 @@
-FROM node:10
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-# Create app directory
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-#RUN npm install
-# If you are building your code for production
-RUN npm ci
-
-# Bundle app source
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src/PortfolioSiteAPI/
+COPY ["PortfolioSiteAPI.csproj", "/src/PortfolioSiteAPI/"]
+RUN dotnet restore "PortfolioSiteAPI.csproj"
 COPY . .
+WORKDIR "/src/PortfolioSiteAPI/"
+RUN dotnet build "PortfolioSiteAPI.csproj" -c Release -o /app/build
 
-EXPOSE 8080
-CMD [ "node", "app.js" ]
+FROM build AS publish
+RUN dotnet publish "PortfolioSiteAPI.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "PortfolioSiteAPI.dll"]
