@@ -17,6 +17,7 @@ using System.Text;
 using PortfolioSiteAPI.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace PortfolioSiteAPI
 {
@@ -59,6 +60,11 @@ namespace PortfolioSiteAPI
             services.AddAutoMapper(typeof(Startup));
             services.AddOptions();
             services.Configure<TokenConfig>(Configuration.GetSection("Token"));
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
         }
 
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -76,6 +82,7 @@ namespace PortfolioSiteAPI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseRouting();
 
@@ -96,10 +103,18 @@ namespace PortfolioSiteAPI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
 
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
             await CreateUserRoles(app);
         }
 

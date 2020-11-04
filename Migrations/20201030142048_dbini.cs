@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PortfolioSiteAPI.Migrations
 {
-    public partial class dbinit : Migration
+    public partial class dbini : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -185,7 +185,7 @@ namespace PortfolioSiteAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TokenValue = table.Column<string>(nullable: true),
+                    TokenValue = table.Column<string>(type: "varchar(max)", nullable: true),
                     DateIssued = table.Column<DateTime>(nullable: false),
                     ExpiryDate = table.Column<DateTime>(nullable: false),
                     Expired = table.Column<bool>(nullable: false),
@@ -210,7 +210,7 @@ namespace PortfolioSiteAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Company_Name = table.Column<string>(nullable: true),
                     Postion_Name = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<string>(nullable: true),
                     OrderNumber = table.Column<int>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: true)
                 },
@@ -308,11 +308,6 @@ namespace PortfolioSiteAPI.Migrations
                 name: "IX_Tokens_Expired",
                 table: "Tokens",
                 column: "Expired");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tokens_TokenValue",
-                table: "Tokens",
-                column: "TokenValue");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkExperiences_ApplicationUserId",

@@ -1,0 +1,18 @@
+#fh5co-footer {
+  padding: 50px 0;
+  float: left;
+  width: 100%;
+}
+
+#fh5co-footer p:last-child {
+  margin-bottom: 0;
+}
+
+.fh5co-bg-dark {
+  background: #2F3C4F;
+  background: #FF9000;
+}
+
+.fh5co-bg-dark .fh5co-heading h2 {
+  color: #fff !important;
+}

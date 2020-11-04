@@ -10,8 +10,8 @@ using PortfolioSiteAPI.Data;
 namespace PortfolioSiteAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201027211550_changedtoDate")]
-    partial class changedtoDate
+    [Migration("20201030142048_dbini")]
+    partial class dbini
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
