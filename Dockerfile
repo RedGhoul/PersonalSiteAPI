@@ -4,6 +4,10 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+RUN apt-get update -yq 
+RUN apt-get install curl gnupg -yq 
+RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
+RUN apt-get install -y nodejs
 WORKDIR /src/PortfolioSiteAPI/
 COPY ["PortfolioSiteAPI.csproj", "/src/PortfolioSiteAPI/"]
 RUN dotnet restore "PortfolioSiteAPI.csproj"
