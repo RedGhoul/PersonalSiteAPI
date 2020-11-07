@@ -40,11 +40,6 @@ namespace PortfolioSiteAPI.Data
 
             builder.Entity<WorkExperience>().HasIndex(x => x.OrderNumber);
 
-            builder.Entity<Token>(eb =>
-            {
-                eb.Property(b => b.TokenValue).HasColumnType("varchar(max)");
-            });
-
             builder.Entity<Token>().HasIndex(x => x.DateIssued);
 
             builder.Entity<Token>().HasIndex(x => x.Expired);

@@ -32,10 +32,18 @@ namespace PortfolioSiteAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            string AppDBConnectionString = "";
+
+            if (Configuration.GetValue<string>("Environment").Equals("Dev"))
+            {
+                AppDBConnectionString = Configuration.GetConnectionString("PortfolioSite_DB_Local");
+            }
+            else
+            {
+                AppDBConnectionString = Configuration.GetConnectionString("PortfolioSite_DB_Prod");
+            }
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(AppDBConnectionString));
 
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
