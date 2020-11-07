@@ -66,8 +66,8 @@ namespace PortfolioSiteAPI
             services.AddTransient<UserManager<ApplicationUser>>();
             services.AddTransient<RoleManager<IdentityRole>>();
             services.AddAutoMapper(typeof(Startup));
-            services.AddOptions();
-            services.Configure<TokenConfig>(Configuration.GetSection("Token"));
+            //services.AddOptions();
+            ////services.Configure<TokenConfig>(Configuration.GetSection("Token"));
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -99,7 +99,7 @@ namespace PortfolioSiteAPI
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
-            app.UseMiddleware<JwtMiddleware>();
+            //app.UseMiddleware<JwtMiddleware>();
             
             app.UseAuthentication();
             app.UseAuthorization();

@@ -15,7 +15,6 @@ namespace PortfolioSiteAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AuthorizeJwtAttribute(AllowNoAuth = "/api/workexperiences")]
     public class WorkExperiencesController : BaseAPIController
     {
         private readonly IMapper _mapper;
@@ -49,83 +48,7 @@ namespace PortfolioSiteAPI.Controllers
             return new ObjectResult(dto);
         }
 
-        // GET: api/WorkExperiences/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<WorkExperienceDto>> GetWorkExperience(int id)
-        {
-            var curUser = await GetCurrentUser();
-            var workExperience = await _context.WorkExperiences.Include(x => x.Comments).Where(
-                x => x.ApplicationUserId.Equals(curUser.Id) && x.Id == id)
-                .FirstOrDefaultAsync();
-
-            if (workExperience == null)
-            {
-                return NotFound();
-            }
-            var dto = _mapper.Map<WorkExperienceDto>(workExperience);
-            return dto;
-        }
-
-        // PUT: api/WorkExperiences/5
-        [HttpPost("update/{id}")]
-        public async Task<IActionResult> PutWorkExperience(int id, WorkExperienceDto WorkExperienceDto)
-        {
-            var workExperince = _mapper.Map<WorkExperience>(WorkExperienceDto);
-            if (id != workExperince.Id)
-            {
-                return BadRequest();
-            }
-            var curUser = await GetCurrentUser();
-            workExperince.ApplicationUserId = curUser.Id;
-            _context.Entry(workExperince).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!WorkExperienceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/WorkExperiences
-        [HttpPost("create")]
-        public async Task<ActionResult<WorkExperience>> PostWorkExperience(WorkExperienceDto WorkExperienceDto)
-        {
-            var workex = _mapper.Map<WorkExperience>(WorkExperienceDto);
-            var curUser = await GetCurrentUser();
-            workex.ApplicationUserId = curUser.Id;
-            _context.WorkExperiences.Add(workex);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetWorkExperience", new { id = workex.Id }, WorkExperienceDto);
-        }
-
-        // DELETE: api/WorkExperiences/5
-        [HttpDelete("delete/{id}")]
-        public async Task<ActionResult<WorkExperience>> DeleteWorkExperience(int id)
-        {
-            var workExperience = await _context.WorkExperiences.FindAsync(id);
-            if (workExperience == null)
-            {
-                return NotFound();
-            }
-
-            _context.WorkExperiences.Remove(workExperience);
-            await _context.SaveChangesAsync();
-
-            return workExperience;
-        }
+       
 
         private bool WorkExperienceExists(int id)
         {
