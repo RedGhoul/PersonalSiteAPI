@@ -86,6 +86,7 @@ namespace PortfolioSiteAPI
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
+                InitializeDatabase(app);
             }
 
             app.UseHttpsRedirection();
@@ -124,6 +125,7 @@ namespace PortfolioSiteAPI
                 }
             });
             await CreateUserRoles(app);
+            
         }
 
         private async Task CreateUserRoles(IApplicationBuilder app)
@@ -156,6 +158,12 @@ namespace PortfolioSiteAPI
                 }
             }
 
+        }
+
+        private void InitializeDatabase(IApplicationBuilder app)
+        {
+            using var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
         }
     }
 }
