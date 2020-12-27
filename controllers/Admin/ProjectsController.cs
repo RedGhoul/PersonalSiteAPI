@@ -60,12 +60,10 @@ namespace PortfolioSiteAPI.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Tag_Line,Url_Github,Url_Live,Can_Show,ApplicationUserId")] Project project)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(project);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            project.Id = 0;
+            _context.Projects.Add(project);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
             ViewData["ApplicationUserId"] = new SelectList(_context.Users, "Id", "Id", project.ApplicationUserId);
             return View(project);
         }
