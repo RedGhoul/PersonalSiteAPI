@@ -58,7 +58,7 @@ namespace PortfolioSiteAPI.Controllers.Admin
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Tag_Line,Url_Github,Url_Live,Can_Show,ApplicationUserId")] Project project)
+        public async Task<IActionResult> Create([Bind("Name,Tag_Line,Url_Github,Url_Live,Can_Show,ApplicationUserId")] Project project)
         {
             if (ModelState.IsValid)
             {
