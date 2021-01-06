@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@risingstack/react-easy-state": "^6.3.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "react": "^16.13.1",
     "react-animate-on-scroll": "^2.1.5",
